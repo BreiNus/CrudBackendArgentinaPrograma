@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 //si dejamos esta annotacion como viene por default significa que nosotros podemos acceder desde cualquier URL a esta 
 @CrossOrigin
 public class AuthController {
-    //dentro tendra dos metodos
+    //dentro tendra tres metodos 
 
     @Autowired
     PasswordEncoder passwordEncoder;

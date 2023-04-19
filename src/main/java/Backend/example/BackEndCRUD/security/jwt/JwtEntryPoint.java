@@ -3,13 +3,12 @@ package Backend.example.BackEndCRUD.security.jwt;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-
+import java.io.IOException;
 
 @Component
 //Lo que hace esta clase es comprobar comprobar si hay un token valido, sino lo que hace es que devuelve una respuesta 401 no autorizado
@@ -21,7 +20,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {
         //aca vamos a lanzar el error
-        logger.error("fail en el método commence"  + e.getMessage() + e.getLocalizedMessage());
+        logger.error("fail en el método commence" + e.getMessage()+e.getLocalizedMessage());
         //el response manda el error
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no autorizado");
     }

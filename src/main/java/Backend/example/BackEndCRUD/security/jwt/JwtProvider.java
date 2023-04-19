@@ -5,24 +5,22 @@ import Backend.example.BackEndCRUD.security.model.UsuarioPrincipal;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import java.security.Key;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import java.security.Key;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 //Lo que hace esta clase es generar el token y posee un metodo de validacion para ver que este bien formado, que no este expirado, etc
@@ -55,7 +53,7 @@ public class JwtProvider {
                 //momento de creacion del token
                 .setIssuedAt(new Date())
                 //momento de expiracion del token
-                .setExpiration(new Date(new Date().getTime() + expiration))
+                .setExpiration(new Date(new Date().getTime() + expiration * 180))
                 //firma
                 .signWith(getSecret(secret))
                 .compact();
@@ -79,9 +77,9 @@ public class JwtProvider {
         } catch (ExpiredJwtException e) {
             logger.error("Token expirado");
         } catch (IllegalArgumentException e) {
-            logger.error("Token vacio");
+            logger.error("Token vacío");
         } catch (SignatureException e) {
-            logger.error("Falla en la firma");
+            logger.error("Fallo en la firma");
         }
         return false;
     }
@@ -90,7 +88,7 @@ public class JwtProvider {
     public String refreshToken(JwtDto jwtDto) throws ParseException {
         //comprobamos si el token es valido para que no genere vulnerabilidad en la pagina
         try {
-            Jwts.parserBuilder().setSigningKey(getSecret(secret)).build().parseClaimsJws(jwtDto.getToken());
+             Jwts.parserBuilder().setSigningKey(getSecret(secret)).build().parseClaimsJws(jwtDto.getToken());
         } catch (ExpiredJwtException e) {
             //aca parseo el jwt que viene de JwtDto
             JWT jwt = JWTParser.parse(jwtDto.getToken());
