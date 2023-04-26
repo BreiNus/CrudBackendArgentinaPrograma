@@ -1,11 +1,10 @@
-package Backend.example.BackEndCRUD.model;
+package Backend.example.BackEndCRUD.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,9 +18,9 @@ public class ExpLaboral {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombreCompania;
-    private Boolean esTrabajoActual;
-    private Date inicioTrabajo;
-    private Date finTrabajo;
+    private String esTrabajoActual;
+    private String inicioTrabajo;
+    private String finTrabajo;
     private String sobreProyecto;
     //variable que va a relacionar la expLaboral con Persona
     @Column(name = "persona_id")
@@ -30,13 +29,12 @@ public class ExpLaboral {
     public ExpLaboral() {
     }
 
-    public ExpLaboral(String nombreCompania, Boolean esTrabajoActual, Date inicioTrabajo, Date finTrabajo, String sobreProyecto, Long personaId) {
+    public ExpLaboral(String nombreCompania, String esTrabajoActual, String inicioTrabajo, String finTrabajo, String sobreProyecto) {
         this.nombreCompania = nombreCompania;
         this.esTrabajoActual = esTrabajoActual;
         this.inicioTrabajo = inicioTrabajo;
         this.finTrabajo = finTrabajo;
         this.sobreProyecto = sobreProyecto;
-        this.personaId = personaId;
     }
 
 }

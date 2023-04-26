@@ -1,6 +1,6 @@
 package Backend.example.BackEndCRUD.repository;
 
-import Backend.example.BackEndCRUD.model.Persona;
+import Backend.example.BackEndCRUD.entity.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

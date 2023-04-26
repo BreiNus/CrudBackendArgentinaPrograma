@@ -1,10 +1,16 @@
 package Backend.example.BackEndCRUD.service;
 
-import Backend.example.BackEndCRUD.model.Persona;
+import Backend.example.BackEndCRUD.dto.ExpAcademicaDto;
+import Backend.example.BackEndCRUD.dto.ExpLaboralDto;
+import Backend.example.BackEndCRUD.entity.ExpAcademica;
+import Backend.example.BackEndCRUD.entity.ExpLaboral;
+import Backend.example.BackEndCRUD.entity.Persona;
+import Backend.example.BackEndCRUD.repository.ExpAcademicaRepository;
+import Backend.example.BackEndCRUD.repository.ExpLaboralRepository;
 import Backend.example.BackEndCRUD.repository.PersonaRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +20,13 @@ public class PersonaService implements IPersonaService {
 
     @Autowired
     public PersonaRepository persoRepo;
+
+    @Autowired
+    public ExpLaboralRepository expLaboralRepository;
+
+    @Autowired
+    public ExpAcademicaRepository expAcademicaRepository;
+
 
     @Override
     public List<Persona> verPersonas() {
@@ -40,5 +53,26 @@ public class PersonaService implements IPersonaService {
     public boolean existsById(Long id) {
         return persoRepo.existsById(id);
     }
+
+    @Override
+    public void agregarExpLaboral(Long id , ExpLaboralDto expLaboralDto){
+        Persona per = buscarPersona(id);
+        if(per==null){
+            throw new RuntimeException("La persona no existe por ese ID");
+        }
+        ExpLaboral expLaboral = new ExpLaboral(expLaboralDto.getNombreCompania(),expLaboralDto.getEsTrabajoActual(),expLaboralDto.getInicioTrabajo(),expLaboralDto.getFinTrabajo(),expLaboralDto.getSobreProyecto());
+                expLaboralRepository.save(expLaboral);
+    }
+
+    @Override
+    public void agregarExpAcademica(Long id, ExpAcademicaDto expAcademicaDto) {
+        Persona per = buscarPersona(id);
+        if(per==null){
+            throw new RuntimeException("La persona no existe por ese ID");
+        }
+        ExpAcademica expAcademica =new ExpAcademica(expAcademicaDto.getNivel(),expAcademicaDto.getLugar(),expAcademicaDto.getTitulo(),expAcademicaDto.getInicioEstudio(),expAcademicaDto.getFinEstudio());
+        expAcademicaRepository.save(expAcademica);
+    }
+
 
 }

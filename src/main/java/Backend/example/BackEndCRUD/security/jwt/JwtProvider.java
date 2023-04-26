@@ -38,7 +38,7 @@ public class JwtProvider {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    //se contrulle el token
+    //se construlle el token
     public String generateToken(Authentication authentication) {
         //aca se realizo un casteo se esta casteando el .getPrincipal() de un UsuarioPrincipal que es nuestra clase
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();

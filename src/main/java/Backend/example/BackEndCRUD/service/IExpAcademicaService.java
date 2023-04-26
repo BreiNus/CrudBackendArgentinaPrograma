@@ -1,12 +1,12 @@
 package Backend.example.BackEndCRUD.service;
 
-import Backend.example.BackEndCRUD.model.ExpAcademica;
+import Backend.example.BackEndCRUD.entity.ExpAcademica;
 import java.util.List;
 
 
 public interface IExpAcademicaService {
     
-        //metodo para traer todas las experiencias academicas
+    //metodo para traer todas las experiencias academicas
     public List<ExpAcademica> verExpAcademica();
 
     //metodo para crear una experiencia academica
@@ -17,5 +17,9 @@ public interface IExpAcademicaService {
 
     //metodo para encontrar una experiencia academica
     public ExpAcademica buscarExpAcademica(Long id);
+
+    //metodo si existe persona por id
+    public boolean existsById(Long id);
+
     
 }

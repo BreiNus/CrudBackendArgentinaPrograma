@@ -2,8 +2,7 @@ package Backend.example.BackEndCRUD.controller;
 
 import Backend.example.BackEndCRUD.dto.Mensaje;
 import Backend.example.BackEndCRUD.dto.PersonaDto;
-import Backend.example.BackEndCRUD.model.Persona;
-import Backend.example.BackEndCRUD.service.IPersonaService;
+import Backend.example.BackEndCRUD.entity.Persona;
 import Backend.example.BackEndCRUD.service.PersonaService;
 import io.micrometer.common.util.StringUtils;
 import java.util.List;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -96,6 +93,28 @@ public class Controller {
         if (!personaService.existsById(id)) {
             return new ResponseEntity(new Mensaje("No existe persona con ese ID"), HttpStatus.NOT_FOUND);
         }
+        if(StringUtils.isBlank(personaDto.getNombre())){
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getApellido())){
+            return new ResponseEntity(new Mensaje("El apellido es obligatorio"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getEmail())){
+            return new ResponseEntity(new Mensaje("El email es obligatorio"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getFechaNacimiento())){
+            return new ResponseEntity(new Mensaje("La fecha de nacimiento es obligatoria"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getTelefono())){
+            return new ResponseEntity(new Mensaje("El numero de telefono es obligatorio"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getLocalidad())){
+            return new ResponseEntity(new Mensaje("La localidad es obligatoria"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(personaDto.getSobreMi())){
+            return new ResponseEntity(new Mensaje("La descripcion breve de la persona es obligatoria"), HttpStatus.BAD_REQUEST);
+        }
+
         Persona persona = personaService.buscarPersona(id);
         persona.setNombre(personaDto.getNombre());
         persona.setApellido(personaDto.getApellido());

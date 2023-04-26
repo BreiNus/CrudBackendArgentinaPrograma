@@ -1,8 +1,9 @@
 package Backend.example.BackEndCRUD.service;
 
-import Backend.example.BackEndCRUD.model.Persona;
+import Backend.example.BackEndCRUD.dto.ExpAcademicaDto;
+import Backend.example.BackEndCRUD.dto.ExpLaboralDto;
+import Backend.example.BackEndCRUD.entity.Persona;
 import java.util.List;
-import java.util.Optional;
 
 public interface IPersonaService {
 
@@ -20,5 +21,13 @@ public interface IPersonaService {
 
     //metodo si existe persona por id
     public boolean existsById(Long id);
+
+    //metodo para agregar exp Laboral
+    public void agregarExpLaboral(Long id , ExpLaboralDto expLaboralDto);
+
+
+    //metodo para agregar exp Academica
+    public void agregarExpAcademica(Long id , ExpAcademicaDto expAcademicaDto);
+
 
 }

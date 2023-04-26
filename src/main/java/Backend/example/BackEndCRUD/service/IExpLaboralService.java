@@ -1,6 +1,6 @@
 package Backend.example.BackEndCRUD.service;
 
-import Backend.example.BackEndCRUD.model.ExpLaboral;
+import Backend.example.BackEndCRUD.entity.ExpLaboral;
 import java.util.List;
 
 
@@ -17,5 +17,8 @@ public interface IExpLaboralService {
 
     //metodo para encontrar una experiencia laboral
     public ExpLaboral buscarExpLaboral(Long id);
+
+    //metodo si existe persona por id
+    public boolean existsById(Long id);
     
 }

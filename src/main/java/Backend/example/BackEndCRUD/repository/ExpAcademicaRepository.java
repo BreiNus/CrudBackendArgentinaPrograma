@@ -1,6 +1,6 @@
 package Backend.example.BackEndCRUD.repository;
 
-import Backend.example.BackEndCRUD.model.ExpAcademica;
+import Backend.example.BackEndCRUD.entity.ExpAcademica;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

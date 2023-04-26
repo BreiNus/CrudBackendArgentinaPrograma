@@ -1,4 +1,4 @@
-package Backend.example.BackEndCRUD.model;
+package Backend.example.BackEndCRUD.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -50,5 +50,18 @@ public class Persona {
         this.localidad = localidad;
         this.sobreMi = sobreMi;
     }
+
+    public void agregarExpLaboral(ExpLaboral expLaboral){
+        if (listadoExpLabolares !=null){
+            listadoExpLabolares.add(expLaboral);
+        }
+    }
+
+    public void agregarExpAcademica(ExpAcademica expAcademica){
+        if (listadoExpAcademica !=null){
+            listadoExpAcademica.add(expAcademica);
+        }
+    }
+
 
 }

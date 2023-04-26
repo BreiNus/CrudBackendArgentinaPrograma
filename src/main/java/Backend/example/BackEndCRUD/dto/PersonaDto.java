@@ -4,7 +4,12 @@
  */
 package Backend.example.BackEndCRUD.dto;
 
+import Backend.example.BackEndCRUD.entity.ExpAcademica;
+import Backend.example.BackEndCRUD.entity.ExpLaboral;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonaDto {
 
@@ -23,6 +28,10 @@ public class PersonaDto {
     @NotBlank
     private String sobreMi;
 
+    private List<ExpLaboral> listadoExpLabolares;
+
+    private List<ExpAcademica> listadoExpAcademica;
+
     public PersonaDto() {
     }
 
@@ -34,6 +43,8 @@ public class PersonaDto {
         this.telefono = telefono;
         this.localidad = localidad;
         this.sobreMi = sobreMi;
+        this.listadoExpAcademica =new ArrayList<>();
+        this.listadoExpLabolares =new ArrayList<>();
     }
 
     public String getNombre() {
@@ -91,7 +102,24 @@ public class PersonaDto {
     public void setSobreMi(String sobreMi) {
         this.sobreMi = sobreMi;
     }
-    
-    
 
+    public List<ExpLaboral> getListadoExpLabolares() {
+        return listadoExpLabolares;
+    }
+
+    public List<ExpAcademica> getListadoExpAcademica() {
+        return listadoExpAcademica;
+    }
+
+    public void agregarExpLaboral(ExpLaboral expLaboral){
+        if (listadoExpLabolares !=null){
+            listadoExpLabolares.add(expLaboral);
+        }
+    }
+
+    public void agregarExpAcademica(ExpAcademica expAcademica){
+        if (listadoExpAcademica !=null){
+            listadoExpAcademica.add(expAcademica);
+        }
+    }
 }
