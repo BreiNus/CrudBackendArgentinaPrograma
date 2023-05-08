@@ -5,11 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 public class ExpAcademicaDto {
 
     @NotBlank
+    private String nombreExpAcademica;
+    @NotBlank
+    private String descripcionExpAcademica;
+    @NotBlank
     private String nivel;
     @NotBlank
     private String lugar;
-    @NotBlank
-    private String titulo;
     @NotBlank
     private String inicioEstudio;
     @NotBlank
@@ -18,12 +20,29 @@ public class ExpAcademicaDto {
     public ExpAcademicaDto() {
     }
 
-    public ExpAcademicaDto(String nivel, String lugar, String titulo, String inicioEstudio, String finEstudio) {
+    public ExpAcademicaDto(String nombreExpAcademica, String descripcionExpAcademica, String nivel, String lugar, String inicioEstudio, String finEstudio) {
+        this.nombreExpAcademica = nombreExpAcademica;
+        this.descripcionExpAcademica = descripcionExpAcademica;
         this.nivel = nivel;
         this.lugar = lugar;
-        this.titulo = titulo;
         this.inicioEstudio = inicioEstudio;
         this.finEstudio = finEstudio;
+    }
+
+    public String getNombreExpAcademica() {
+        return nombreExpAcademica;
+    }
+
+    public void setNombreExpAcademica(String nombreExpAcademica) {
+        this.nombreExpAcademica = nombreExpAcademica;
+    }
+
+    public String getDescripcionExpAcademica() {
+        return descripcionExpAcademica;
+    }
+
+    public void setDescripcionExpAcademica(String descripcionExpAcademica) {
+        this.descripcionExpAcademica = descripcionExpAcademica;
     }
 
     public String getNivel() {
@@ -40,14 +59,6 @@ public class ExpAcademicaDto {
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
     }
 
     public String getInicioEstudio() {

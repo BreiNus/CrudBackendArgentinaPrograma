@@ -4,6 +4,8 @@ import Backend.example.BackEndCRUD.entity.ExpAcademica;
 import Backend.example.BackEndCRUD.repository.ExpAcademicaRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ExpAcademicaService implements IExpAcademicaService {
 
     @Autowired
-    ExpAcademicaRepository expAcaRepo;
+    public ExpAcademicaRepository expAcaRepo;
 
     @Override
     public List<ExpAcademica> verExpAcademica() {
@@ -36,8 +38,18 @@ public class ExpAcademicaService implements IExpAcademicaService {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public Optional<ExpAcademica> getByNombreExpAcademica(String nombreExpAcademica) {
+        return expAcaRepo.findByNombreExpAcademica(nombreExpAcademica);
+    }
+
+    @Override
+    public boolean existById(Long id) {
         return expAcaRepo.existsById(id);
+    }
+
+    @Override
+    public boolean existByNombreExpAcademica(String nombreExpAcademica) {
+        return expAcaRepo.existsByNombreExpAcademica(nombreExpAcademica);
     }
 
 }

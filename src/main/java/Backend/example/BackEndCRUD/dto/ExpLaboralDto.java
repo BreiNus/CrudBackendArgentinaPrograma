@@ -7,25 +7,33 @@ import jakarta.validation.constraints.NotBlank;
 public class ExpLaboralDto {
 
     @NotBlank
-    private String nombreCompania;
+    private String nombreExpLaboral;
     @NotBlank
-    private String esTrabajoActual;
+    private String nombreCompania;
     @NotBlank
     private String inicioTrabajo;
     @NotBlank
     private String finTrabajo;
     @NotBlank
-    private String sobreProyecto;
+    private String descripcionTrabajo;
 
     public ExpLaboralDto() {
     }
 
-    public ExpLaboralDto(String nombreCompania, String esTrabajoActual, String inicioTrabajo, String finTrabajo, String sobreProyecto) {
+    public ExpLaboralDto(String nombreExpLaboral,String nombreCompania, String esTrabajoActual, String inicioTrabajo, String finTrabajo, String descripcionTrabajo) {
+        this.nombreExpLaboral = nombreExpLaboral;
         this.nombreCompania = nombreCompania;
-        this.esTrabajoActual = esTrabajoActual;
         this.inicioTrabajo = inicioTrabajo;
         this.finTrabajo = finTrabajo;
-        this.sobreProyecto = sobreProyecto;
+        this.descripcionTrabajo = descripcionTrabajo;
+    }
+
+    public String getNombreExpLaboral() {
+        return nombreExpLaboral;
+    }
+
+    public void setNombreExpLaboral(String nombreExpLaboral) {
+        this.nombreExpLaboral = nombreExpLaboral;
     }
 
     public String getNombreCompania() {
@@ -34,14 +42,6 @@ public class ExpLaboralDto {
 
     public void setNombreCompania(String nombreCompania) {
         this.nombreCompania = nombreCompania;
-    }
-
-    public String getEsTrabajoActual() {
-        return esTrabajoActual;
-    }
-
-    public void setEsTrabajoActual(String esTrabajoActual) {
-        this.esTrabajoActual = esTrabajoActual;
     }
 
     public String getInicioTrabajo() {
@@ -60,11 +60,11 @@ public class ExpLaboralDto {
         this.finTrabajo = finTrabajo;
     }
 
-    public String getSobreProyecto() {
-        return sobreProyecto;
+    public String getDescripcionTrabajo() {
+        return descripcionTrabajo;
     }
 
-    public void setSobreProyecto(String sobreProyecto) {
-        this.sobreProyecto = sobreProyecto;
+    public void setDescripcionTrabajo(String descripcionTrabajo) {
+        this.descripcionTrabajo = descripcionTrabajo;
     }
 }

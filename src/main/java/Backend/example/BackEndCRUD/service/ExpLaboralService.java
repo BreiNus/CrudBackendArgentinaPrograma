@@ -4,6 +4,8 @@ import Backend.example.BackEndCRUD.entity.ExpLaboral;
 import Backend.example.BackEndCRUD.repository.ExpLaboralRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class ExpLaboralService implements IExpLaboralService {
 
     @Autowired
-    ExpLaboralRepository expLabRepo;
+    public ExpLaboralRepository expLabRepo;
 
     @Override
     public List<ExpLaboral> verExpLaboral() {
@@ -37,8 +39,18 @@ public class ExpLaboralService implements IExpLaboralService {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public Optional<ExpLaboral> getByNombreExpLaboral(String nombreExpLaboral) {
+        return expLabRepo.findByNombreExpLaboral(nombreExpLaboral);
+    }
+
+    @Override
+    public boolean existById(Long id) {
         return expLabRepo.existsById(id);
+    }
+
+    @Override
+    public boolean existByNombreExpLaboral(String nombreExpLaboral) {
+        return expLabRepo.existsByNombreExpLaboral(nombreExpLaboral);
     }
 
 }

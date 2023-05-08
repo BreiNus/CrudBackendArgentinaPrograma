@@ -14,19 +14,19 @@ import java.util.List;
 public class PersonaDto {
 
     @NotBlank
-    private String nombre;
+    private String nombrePersona;
     @NotBlank
-    private String apellido;
+    private String puestoTrabajo;
     @NotBlank
-    private String email;
-    @NotBlank
-    private String fechaNacimiento;
-    @NotBlank
-    private String telefono;
+    private String sobreMi;
     @NotBlank
     private String localidad;
     @NotBlank
-    private String sobreMi;
+    private long telefono;
+    @NotBlank
+    private String email;
+    @NotBlank
+    private String gitHubPersonal;
 
     private List<ExpLaboral> listadoExpLabolares;
 
@@ -35,64 +35,32 @@ public class PersonaDto {
     public PersonaDto() {
     }
 
-    public PersonaDto(@NotBlank String nombre, @NotBlank String apellido, @NotBlank String email, @NotBlank String fechaNacimiento, @NotBlank String telefono, @NotBlank String localidad, @NotBlank String sobreMi) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.localidad = localidad;
+    public PersonaDto(String nombre, String puestoTrabajo, String sobreMi, String localidad, long telefono, String email, String gitHubPersonal, List<ExpLaboral> listadoExpLabolares, List<ExpAcademica> listadoExpAcademica) {
+        this.nombrePersona = nombrePersona;
+        this.puestoTrabajo = puestoTrabajo;
         this.sobreMi = sobreMi;
-        this.listadoExpAcademica =new ArrayList<>();
-        this.listadoExpLabolares =new ArrayList<>();
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
         this.localidad = localidad;
+        this.telefono = telefono;
+        this.email = email;
+        this.gitHubPersonal = gitHubPersonal;
+        this.listadoExpLabolares = listadoExpLabolares;
+        this.listadoExpAcademica = listadoExpAcademica;
+    }
+
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
+    }
+
+    public String getPuestoTrabajo() {
+        return puestoTrabajo;
+    }
+
+    public void setPuestoTrabajo(String puestoTrabajo) {
+        this.puestoTrabajo = puestoTrabajo;
     }
 
     public String getSobreMi() {
@@ -103,13 +71,38 @@ public class PersonaDto {
         this.sobreMi = sobreMi;
     }
 
-    public List<ExpLaboral> getListadoExpLabolares() {
-        return listadoExpLabolares;
+    public String getLocalidad() {
+        return localidad;
     }
 
-    public List<ExpAcademica> getListadoExpAcademica() {
-        return listadoExpAcademica;
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
     }
+
+    public long getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(long telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGitHubPersonal() {
+        return gitHubPersonal;
+    }
+
+    public void setGitHubPersonal(String gitHubPersonal) {
+        this.gitHubPersonal = gitHubPersonal;
+    }
+
 
     public void agregarExpLaboral(ExpLaboral expLaboral){
         if (listadoExpLabolares !=null){

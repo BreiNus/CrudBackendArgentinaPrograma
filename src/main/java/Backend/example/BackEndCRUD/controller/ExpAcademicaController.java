@@ -22,74 +22,57 @@ public class ExpAcademicaController {
 
 
     @Autowired
-    private ExpAcademicaService expAcademicaService;
+    public ExpAcademicaService expAcademicaService;
+
+
+    @GetMapping("/ver")
+    public ResponseEntity<List<ExpAcademica>> list() {
+        List<ExpAcademica> list = expAcademicaService.verExpAcademica();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<ExpAcademica> getById(@PathVariable("id") long id) {
+        if (!expAcademicaService.existById(id)) {
+            return new ResponseEntity(new Mensaje("no existe el id"), HttpStatus.NOT_FOUND);
+        }
+
+        ExpAcademica expAcademica =expAcademicaService.buscarExpAcademica(id);
+
+        return new ResponseEntity(expAcademica, HttpStatus.OK);
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<?> create(@RequestBody ExpAcademicaDto expAcademicaDto) {
 
-        if (StringUtils.isBlank(expAcademicaDto.getNivel())) {
-            return new ResponseEntity(new Mensaje("El nivel educativo es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (StringUtils.isBlank(expAcademicaDto.getNombreExpAcademica())) {
+            return new ResponseEntity(new Mensaje("El Titulo/Nombre del estudio es obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(expAcademicaDto.getLugar())) {
-            return new ResponseEntity(new Mensaje("El lugar de cursado es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getTitulo())) {
-            return new ResponseEntity(new Mensaje("El nombre del titulo/certificado es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getInicioEstudio())) {
-            return new ResponseEntity(new Mensaje("La fecha de inicio del cursado es obligatoria"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getFinEstudio())) {
-            return new ResponseEntity(new Mensaje("La fecha de fin del cursado es obligatoria"), HttpStatus.BAD_REQUEST);
-        }
-        ExpAcademica expAcademica = new ExpAcademica(expAcademicaDto.getNivel(), expAcademicaDto.getLugar(), expAcademicaDto.getTitulo(), expAcademicaDto.getInicioEstudio(), expAcademicaDto.getFinEstudio());
+        ExpAcademica expAcademica = new ExpAcademica(expAcademicaDto.getNombreExpAcademica(),expAcademicaDto.getDescripcionExpAcademica(),expAcademicaDto.getNivel(),expAcademicaDto.getLugar(), expAcademicaDto.getInicioEstudio(), expAcademicaDto.getFinEstudio());
         expAcademicaService.crearExpAcademica(expAcademica);
         return new ResponseEntity(new Mensaje("La Experiencia academica ha sido creada"), HttpStatus.OK);
 
     }
 
-    @GetMapping("/ver")
-    public ResponseEntity<List<ExpAcademica>> verExpAcademica() {
-        List<ExpAcademica> list = expAcademicaService.verExpAcademica();
-        return new ResponseEntity(list, HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrar(@PathVariable("id") Long id) {
-        if (!expAcademicaService.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No existe experiencia academica con ese ID"), HttpStatus.NOT_FOUND);
-        }
-        expAcademicaService.borrarExpAcademica(id);
-        return new ResponseEntity(new Mensaje("Experiencia academica eliminada"), HttpStatus.OK);
-    }
-
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editar(@PathVariable("id") Long id, @RequestBody ExpAcademicaDto expAcademicaDto) {
-        if (!expAcademicaService.existsById(id)) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ExpAcademicaDto expAcademicaDto) {
+        if (!expAcademicaService.existById(id)) {
             return new ResponseEntity(new Mensaje("No existe una experiencia academica con ese ID"), HttpStatus.NOT_FOUND);
         }
-        if (StringUtils.isBlank(expAcademicaDto.getNivel())) {
-            return new ResponseEntity(new Mensaje("El nivel educativo es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (expAcademicaService.existByNombreExpAcademica(expAcademicaDto.getNombreExpAcademica()) && expAcademicaService.getByNombreExpAcademica(expAcademicaDto.getNombreExpAcademica()).get().getId() != id) {
+            return new ResponseEntity(new Mensaje("Esa experiencia academica ya existe"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(expAcademicaDto.getLugar())) {
-            return new ResponseEntity(new Mensaje("El lugar de cursado es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getTitulo())) {
-            return new ResponseEntity(new Mensaje("El nombre del titulo/certificado es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getInicioEstudio())) {
-            return new ResponseEntity(new Mensaje("La fecha de inicio del cursado es obligatoria"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expAcademicaDto.getFinEstudio())) {
-            return new ResponseEntity(new Mensaje("La fecha de fin del cursado es obligatoria"), HttpStatus.BAD_REQUEST);
+        if (StringUtils.isBlank(expAcademicaDto.getNombreExpAcademica())) {
+            return new ResponseEntity(new Mensaje("El nombre de la Experiencia academica es obligatorio"), HttpStatus.BAD_REQUEST);
         }
 
-       ExpAcademica expAcademica = expAcademicaService.buscarExpAcademica(id);
+
+        ExpAcademica expAcademica = expAcademicaService.buscarExpAcademica(id);
+        expAcademica.setNombreExpAcademica(expAcademicaDto.getNombreExpAcademica());
+        expAcademica.setDescripcionExpAcademica(expAcademicaDto.getDescripcionExpAcademica());
         expAcademica.setNivel(expAcademicaDto.getNivel());
-        expAcademica.setTitulo(expAcademicaDto.getTitulo());
         expAcademica.setLugar(expAcademicaDto.getLugar());
         expAcademica.setInicioEstudio(expAcademicaDto.getInicioEstudio());
         expAcademica.setFinEstudio(expAcademicaDto.getInicioEstudio());
@@ -98,8 +81,14 @@ public class ExpAcademicaController {
 
     }
 
-
-
-
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/borrar/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        if (!expAcademicaService.existById(id)) {
+            return new ResponseEntity(new Mensaje("No existe experiencia academica con ese ID"), HttpStatus.NOT_FOUND);
+        }
+        expAcademicaService.borrarExpAcademica(id);
+        return new ResponseEntity(new Mensaje("Experiencia academica eliminada"), HttpStatus.OK);
+    }
 
 }

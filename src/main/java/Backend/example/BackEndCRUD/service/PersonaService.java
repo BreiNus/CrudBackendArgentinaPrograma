@@ -10,6 +10,7 @@ import Backend.example.BackEndCRUD.repository.ExpLaboralRepository;
 import Backend.example.BackEndCRUD.repository.PersonaRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,18 @@ public class PersonaService implements IPersonaService {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public Optional<Persona> getByNombrePersona(String nombrePersona) {
+        return persoRepo.findByNombrePersona(nombrePersona);
+    }
+
+    @Override
+    public boolean existById(Long id) {
         return persoRepo.existsById(id);
+    }
+
+    @Override
+    public boolean existByNombrePersona(String nombrePersona) {
+        return persoRepo.existsByNombrePersona(nombrePersona);
     }
 
     @Override
@@ -60,7 +71,7 @@ public class PersonaService implements IPersonaService {
         if(per==null){
             throw new RuntimeException("La persona no existe por ese ID");
         }
-        ExpLaboral expLaboral = new ExpLaboral(expLaboralDto.getNombreCompania(),expLaboralDto.getEsTrabajoActual(),expLaboralDto.getInicioTrabajo(),expLaboralDto.getFinTrabajo(),expLaboralDto.getSobreProyecto());
+        ExpLaboral expLaboral = new ExpLaboral(expLaboralDto.getNombreExpLaboral(),expLaboralDto.getNombreCompania(),expLaboralDto.getInicioTrabajo(),expLaboralDto.getFinTrabajo(),expLaboralDto.getDescripcionTrabajo());
                 expLaboralRepository.save(expLaboral);
     }
 
@@ -70,7 +81,7 @@ public class PersonaService implements IPersonaService {
         if(per==null){
             throw new RuntimeException("La persona no existe por ese ID");
         }
-        ExpAcademica expAcademica =new ExpAcademica(expAcademicaDto.getNivel(),expAcademicaDto.getLugar(),expAcademicaDto.getTitulo(),expAcademicaDto.getInicioEstudio(),expAcademicaDto.getFinEstudio());
+        ExpAcademica expAcademica =new ExpAcademica(expAcademicaDto.getNombreExpAcademica(),expAcademicaDto.getDescripcionExpAcademica(),expAcademicaDto.getNivel(),expAcademicaDto.getLugar(),expAcademicaDto.getInicioEstudio(),expAcademicaDto.getFinEstudio());
         expAcademicaRepository.save(expAcademica);
     }
 

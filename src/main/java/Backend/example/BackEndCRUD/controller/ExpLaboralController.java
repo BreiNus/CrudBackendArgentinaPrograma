@@ -23,80 +23,70 @@ import java.util.List;
 public class ExpLaboralController {
 
     @Autowired
-    ExpLaboralService expLaboralService;
+    public ExpLaboralService expLaboralService;
+
+
+    @GetMapping("/ver")
+    public ResponseEntity<List<ExpLaboral>> list() {
+        List<ExpLaboral> list = expLaboralService.verExpLaboral();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<ExpLaboral> getById(@PathVariable("id") long id) {
+        if (!expLaboralService.existById(id)) {
+            return new ResponseEntity(new Mensaje("no existe experiencia laboral con ese ID"), HttpStatus.NOT_FOUND);
+        }
+        ExpLaboral expLaboral = expLaboralService.buscarExpLaboral(id);
+        return new ResponseEntity(expLaboral, HttpStatus.OK);
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<?> create(@RequestBody ExpLaboralDto expLaboralDto) {
 
-        if (StringUtils.isBlank(expLaboralDto.getNombreCompania())) {
-            return new ResponseEntity(new Mensaje("El nombre de la compania es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (StringUtils.isBlank(expLaboralDto.getNombreExpLaboral())) {
+            return new ResponseEntity(new Mensaje("El nombre del trabajo es obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(expLaboralDto.getEsTrabajoActual().toString())) {
-            return new ResponseEntity(new Mensaje("El lugar de cursado es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (expLaboralService.existByNombreExpLaboral(expLaboralDto.getNombreExpLaboral())) {
+            return new ResponseEntity(new Mensaje("ya existe un trabajo con ese nombre"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(expLaboralDto.getInicioTrabajo())) {
-            return new ResponseEntity(new Mensaje("El fecha de inicio del trabajo es obligatoria"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expLaboralDto.getFinTrabajo())) {
-            return new ResponseEntity(new Mensaje("La fecha de fin del trabajo es obligatioria / aclarar en caso de seguir en ese trabajo "), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expLaboralDto.getSobreProyecto())) {
-            return new ResponseEntity(new Mensaje("Es obligatoria una descripcion breve del proyecto"), HttpStatus.BAD_REQUEST);
-        }
-        ExpLaboral expLaboral = new ExpLaboral(expLaboralDto.getNombreCompania(),expLaboralDto.getEsTrabajoActual(),expLaboralDto.getInicioTrabajo(),expLaboralDto.getFinTrabajo(),expLaboralDto.getSobreProyecto());
+
+        ExpLaboral expLaboral = new ExpLaboral(expLaboralDto.getNombreExpLaboral(), expLaboralDto.getNombreCompania(), expLaboralDto.getInicioTrabajo(), expLaboralDto.getFinTrabajo(), expLaboralDto.getDescripcionTrabajo());
         expLaboralService.crearExpLaboral(expLaboral);
         return new ResponseEntity(new Mensaje("La Experiencia laboral ha sido creada"), HttpStatus.OK);
 
     }
 
-    @GetMapping("/ver")
-    public ResponseEntity<List<ExpLaboral>> verExpLaboral() {
-        List<ExpLaboral> list = expLaboralService.verExpLaboral();
-        return new ResponseEntity(list, HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrar(@PathVariable("id") Long id) {
-        if (!expLaboralService.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No existe experiencia laboral con ese ID"), HttpStatus.NOT_FOUND);
-        }
-        expLaboralService.borrarExpLaboral(id);
-        return new ResponseEntity(new Mensaje("Experiencia academica eliminada"), HttpStatus.OK);
-    }
-
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editar(@PathVariable("id") Long id, @RequestBody ExpLaboralDto expLaboralDto) {
-        if (!expLaboralService.existsById(id)) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ExpLaboralDto expLaboralDto) {
+        if (!expLaboralService.existById(id)) {
             return new ResponseEntity(new Mensaje("No existe una experiencia laboral con ese ID"), HttpStatus.NOT_FOUND);
         }
-        if (StringUtils.isBlank(expLaboralDto.getNombreCompania())) {
-            return new ResponseEntity(new Mensaje("El nombre de la compania es obligatorio"), HttpStatus.BAD_REQUEST);
+        if (expLaboralService.existByNombreExpLaboral(expLaboralDto.getNombreExpLaboral()) && expLaboralService.getByNombreExpLaboral(expLaboralDto.getNombreExpLaboral()).get().getId() != id) {
+            return new ResponseEntity(new Mensaje("Esa experienci laboral ya existe"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(expLaboralDto.getEsTrabajoActual())) {
-            return new ResponseEntity(new Mensaje("Indicar si actualmente este es tu trabajo actual o no, es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expLaboralDto.getInicioTrabajo())) {
-            return new ResponseEntity(new Mensaje("El fecha de inicio del trabajo es obligatoria"), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expLaboralDto.getFinTrabajo())) {
-            return new ResponseEntity(new Mensaje("La fecha de fin del trabajo es obligatioria / aclarar en caso de seguir en ese trabajo "), HttpStatus.BAD_REQUEST);
-        }
-        if (StringUtils.isBlank(expLaboralDto.getSobreProyecto())) {
-            return new ResponseEntity(new Mensaje("Es obligatoria una descripcion breve del proyecto"), HttpStatus.BAD_REQUEST);
+        if (StringUtils.isBlank(expLaboralDto.getNombreExpLaboral())) {
+            return new ResponseEntity(new Mensaje("El nombre del trabajo es obligatorio"), HttpStatus.BAD_REQUEST);
         }
 
-        ExpLaboral expLaboral = expLaboralService.buscarExpLaboral(id);
-        expLaboral.setNombreCompania(expLaboralDto.getNombreCompania());
-        expLaboral.setEsTrabajoActual(expLaboralDto.getEsTrabajoActual());
-        expLaboral.setInicioTrabajo(expLaboralDto.getInicioTrabajo());
-        expLaboral.setFinTrabajo(expLaboralDto.getFinTrabajo());
-        expLaboral.setSobreProyecto(expLaboralDto.getSobreProyecto());
-        expLaboralService.crearExpLaboral(expLaboral);
-        return new ResponseEntity(new Mensaje("La experiencia laboral ha sido actualizada"), HttpStatus.OK);
-
+            ExpLaboral expLaboral = expLaboralService.buscarExpLaboral(id);
+            expLaboral.setNombreExpLaboral(expLaboralDto.getNombreExpLaboral());
+            expLaboral.setNombreCompania(expLaboralDto.getNombreCompania());
+            expLaboral.setInicioTrabajo(expLaboralDto.getInicioTrabajo());
+            expLaboral.setFinTrabajo(expLaboralDto.getFinTrabajo());
+            expLaboral.setDescripcionTrabajo(expLaboralDto.getDescripcionTrabajo());
+            expLaboralService.crearExpLaboral(expLaboral);
+            return new ResponseEntity(new Mensaje("La experiencia laboral ha sido actualizada"), HttpStatus.OK);
     }
-    
+        @PreAuthorize("hasRole('ADMIN')")
+        @DeleteMapping("/borrar/{id}")
+        public ResponseEntity<?> delete(@PathVariable("id") Long id){
+            if (!expLaboralService.existById(id)) {
+                return new ResponseEntity(new Mensaje("No existe experiencia laboral con ese ID"), HttpStatus.NOT_FOUND);
+            }
+            expLaboralService.borrarExpLaboral(id);
+            return new ResponseEntity(new Mensaje("Experiencia academica eliminada"), HttpStatus.OK);
+        }
 }
