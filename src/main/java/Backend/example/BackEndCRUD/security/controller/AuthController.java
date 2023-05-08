@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 //si dejamos esta annotacion como viene por default significa que nosotros podemos acceder desde cualquier URL a esta 
 @CrossOrigin
 public class AuthController {
-    //dentro tendra dos metodos
+    //dentro tendra tres metodos 
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -61,7 +61,7 @@ public class AuthController {
         
         //en caso contrario, comprobamos que el nombre no exista, porque el nombreUsuario es unico
          if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("ese nombre de usuario ya existe"), HttpStatus.BAD_REQUEST);
         
         //tambien comprovamos que no exista el email, porque el email es unico
         if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
