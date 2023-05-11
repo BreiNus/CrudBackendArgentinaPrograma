@@ -1,4 +1,4 @@
-FROM amazoncorretto:11
+FROM amazoncorretto:17-alpine
 
 MAINTAINER Matias_Rogante
 
