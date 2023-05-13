@@ -1,5 +1,5 @@
 # :computer: Backend de mi portfolio | Argentina programa
-:small_orange_diamond:Bienvenidos al repositorio de mi backend para el trabajo final integrado de #YoProgramo del curso de Argentina Programa.
+:small_orange_diamond:Bienvenidos al repositorio de mi backend para el trabajo final integradod de #YoProgramo del curso de Argentina Programa.
 
 :small_orange_diamond:Link para acceder al repositorio de mi [Frontend](https://github.com/BreiNus/programa-2022-frontendAngular)
 
