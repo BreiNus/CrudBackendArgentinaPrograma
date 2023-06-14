@@ -3,7 +3,7 @@
 
 :small_orange_diamond:Link para acceder al repositorio de mi [Frontend](https://github.com/BreiNus/programa-2022-frontendAngular)
 
-:small_orange_diamond:Aclaracion: a dia de la fecha 14-06-2023, todo esta funcionando correctamente
+:small_orange_diamond:Aclaracion: a dia de la fecha 14-06-2023, todo esta funcionando correctamente, incluyendo los hostings
 
 
 ## :key: Detalles a tener en cuenta:
