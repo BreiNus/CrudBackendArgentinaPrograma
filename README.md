@@ -5,6 +5,8 @@
 
 :small_orange_diamond:Aclaracion: a dia de la fecha 14-06-2023, todo esta funcionando correctamente, incluyendo los hostings
 
+:small_orange_diamond: Por favor, tener paciencia, las peticiones pueden demorar unos segundos por tema de ubicacion de los host
+
 
 ## :key: Detalles a tener en cuenta:
 :small_orange_diamond: Render puede fallar por causas que me exceden y arrojar el siguiente error, adjunto el link del error en el foro de render [click aqui](https://community.render.com/t/service-not-ready/11856/55)
