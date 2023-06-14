@@ -23,6 +23,8 @@ o el otro error es que se exceda el max de usuarios conectados y no funciona el 
 
 :small_blue_diamond:Configurar el archivo application.properties si se usa otra DB.
 
+:small_blue_diamond:Si por alguna razon el host de firebase deja de funcionar cambiar @CrossOrigin(origins = "https://mi-portfolio-web-6e5bd.web.app") por @CrossOrigin(origins = "*")
+
 :small_blue_diamond:Ejecutar la app iniciando el archivo `BackEndCrudApplication.Java`
 
 :heavy_exclamation_mark: Aclaracion Importante: Si es la primera vez que se corre el backend en una DB desde cero, antes de arrancar el proyecto descomentar el codigo del achivo `CreateRoles.java` que esta en `src/main/java/Backend/example/BackEndCRUD/util` para que cree los roles de ADMIN y USER,  <strong>luego volverlo a comentar, porque sino al ejecutar otra vez el back se volveran a crear</strong>
