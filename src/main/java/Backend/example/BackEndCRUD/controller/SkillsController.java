@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/skills")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://mi-portfolio-web-6e5bd.web.app")
 public class SkillsController {
 
     @Autowired
