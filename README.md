@@ -3,6 +3,8 @@
 
 :small_orange_diamond:Link para acceder al repositorio de mi [Frontend](https://github.com/BreiNus/programa-2022-frontendAngular)
 
+:small_orange_diamond:Aclaracion: a dia de la fecha 14-06-2023, todo esta funcionando correctamente
+
 
 ## :key: Detalles a tener en cuenta:
 :small_orange_diamond: Render puede fallar por causas que me exceden y arrojar el siguiente error, adjunto el link del error en el foro de render [click aqui](https://community.render.com/t/service-not-ready/11856/55)
